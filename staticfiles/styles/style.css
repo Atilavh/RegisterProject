@@ -1,0 +1,211 @@
+@font-face {
+    font-family: poppins;
+    src: url(../fonts/Poppins-Regular.ttf);
+}
+html{
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+*,*::after,*::before{
+    box-sizing: inherit;
+    margin: 0px;
+    padding: 0px;
+}
+body{
+    font-size: 1.6rem;
+    font-family: poppins;
+    background-color: #616161;
+    min-height: 100vh;
+}
+.container{
+    width: 100%;
+    min-height: 99vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.form-wrapper{
+    width: max-content;
+    height: max-content;
+    position: relative;
+    overflow: hidden;
+    padding: .5rem;
+    border-radius: .7rem;
+    background-color: #212121;
+}
+.form{
+    width: 40rem;
+    min-height:45rem;
+    background-color: #424242;
+    border-radius: .5rem;
+    margin: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    z-index: 5;
+    position: relative;
+    color: #fff;
+    transform: translateX(0px);
+    transition: all 150ms ease-in;
+}
+.form__head{
+    font-size: 2.4rem;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid rgba(255, 255, 255, .3);
+    padding-bottom: .5rem;
+}
+
+/*form input{*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    padding: .5rem 1rem;*/
+/*    background-color: transparent;*/
+/*    border: none;*/
+/*    border-bottom: 2px solid #fff;*/
+/*    outline: none;*/
+/*    font-size: 1.6rem;*/
+/*    font-family: poppins;*/
+/*    color: #fff;*/
+/*    transition: all 180ms ease;*/
+/*}*/
+
+.form__input{
+    display: block;
+    width: 100%;
+    padding: .5rem 1rem;
+    background-color: transparent;
+    border: none;
+    border-bottom: 2px solid #fff;
+    outline: none;
+    font-size: 1.6rem;
+    font-family: poppins;
+    color: #fff;
+    transition: all 180ms ease;
+}
+.form__input:focus{
+    background-color: #fff;
+    border-radius: .5rem;
+    color: #000;
+}
+.btn{
+    width: max-content;
+    padding: .7rem 1.5rem;
+    border-radius: .5rem;
+    background-color: #fff;
+    border: none;
+    outline: none;
+    margin-right: auto;
+    margin-left: auto;
+    font-size: 1.6rem;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: auto;
+}
+.form__text {
+    color: #fff;
+}
+.form__link {
+    color: #ab47bc;
+    cursor: pointer;
+    text-decoration: none;
+    font-family:Vazir;
+    transition: 150ms;
+}
+
+.form__link:hover{
+    color: #8e24aa;
+}
+/* login-form */
+.login-form {
+
+
+}
+/* register-form */
+.register-form {
+
+}
+/* email-form */
+.email-form {
+    
+    text-align: center;
+    gap: 3rem;
+ 
+}
+/* change-pass-form */
+.change-pass-form {
+    gap: 2rem;
+}
+.form-background {
+    width: 100%;
+    height: 100%;
+    inset: 0;
+    margin: auto;
+    position: absolute;
+    z-index: -1;
+    border-radius: 30%;
+    filter: blur(10px);
+}
+/* .form-background3{
+    width: 80%;
+    background-color: #ffca28;
+    animation: formBackground3 4s alternate infinite ease;
+} */
+.form-wrapper::after {
+    position: absolute;
+    content: '';
+    width: 40rem;
+    height: 45rem;
+    background-image: linear-gradient(0deg,transparent,#ab47bc,#ab47bc);
+    top: -40%;
+    left: -40%;
+    transform-origin: bottom right;
+    animation: formBackground1 7s linear infinite;
+    z-index: 0;
+}
+.form-wrapper::before {
+    position: absolute;
+    content: '';
+    width: 40rem;
+    height: 45rem;
+    background-image: linear-gradient(0deg,transparent,#5c6bc0,#5c6bc0);
+    bottom: -40%;
+    right:-40%;
+    transform-origin: top left;
+    animation: formBackground1 7s linear infinite;
+    z-index: 0;
+}
+
+.hidden{
+    visibility: hidden;
+    transform: translateX(50px);
+    position: absolute;
+    z-index: 1;
+}
+@keyframes formBackground1 {
+   0%{
+    transform: rotate(0deg);
+    }
+    100%{
+    transform: rotate(360deg);
+   }
+}
+
+
+.index a{
+    text-decoration: none;
+    color: silver;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Vazir;
+}
+
+.index a:hover{
+    color: white;
+    width: 100%;
+    transition: 400ms;
+    background-color: darkgoldenrod;
+}
+

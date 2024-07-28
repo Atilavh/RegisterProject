@@ -1,0 +1,15 @@
+{% extends 'Layout/Base.html' %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+{% endblock %}
+
+{% block title %}Home-page{% endblock %}
+
+{% block content %}
+    <div class="index">
+        <a href="{% url 'RegisterForm' %}">signIn/signUp</a>
+    </div>
+{% endblock %}
+

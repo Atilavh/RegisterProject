@@ -1,0 +1,47 @@
+{% extends 'Layout/Base.html' %}
+{% load static %}
+{% block head %}
+
+    <title>{% block title %}Login / SignUp{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'styles/style.css' %}">
+
+{% endblock %}
+{% block content %}
+
+    <div class="container">
+        <div class="form-wrapper" id="form-wrapper">
+            <form action="{% url 'RegisterForm' %}" class="register-form form" method="post">
+                {% csrf_token %}
+                <div class="form__head">register</div>
+
+
+                {{ register_page.full_name }}
+                {{ register_page.full_name.error_messages }}
+
+                {{ register_page.phone_number }}
+                {{ register_page.phone_number.error_messages }}
+
+                {{ register_page.email }}
+                {{ register_page.email.error_messages }}
+
+                {{ register_page.password }}
+                {{ register_page.password.error_messages }}
+
+                {{ register_page.confirm_password }}
+                {{ register_page.confirm_password.error_messages }}
+                <div class="Formsss">
+                    {#                <input name="username" type="text" placeholder="name and family" class="form__input">#}
+                    {#                <input name="phone" type="text" placeholder="phone Number" class="form__input">#}
+                    {#                <input name="email" type="email" placeholder="Email" class="form__input">#}
+                    {#                <input name="password" type="password" placeholder="Password" class="form__input">#}
+                    {#                <input name="confirm_password" type="password" placeholder="Re:password" class="form__input">#}
+                </div>
+                <p class="form__text"><a href="{% url 'LoginForm' %}" class="form__link">Do you have account?Login
+                    in </a></p>
+
+                <button type="submit" class="btn">Submit</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
