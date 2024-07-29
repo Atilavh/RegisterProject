@@ -4,6 +4,8 @@ from AccountsApp.forms import RegisterForm, LoginForm, ForgotPasswordForm, Reset
 from .models import Users
 from django.http import HttpResponse, Http404
 from django.utils.crypto import get_random_string
+from django.contrib.auth import authenticate, login, logout
+from email_service.email_services import send_email
 
 
 # Create your views here.
@@ -36,12 +38,28 @@ def Register(request):
             )
             new_user.set_password(password)
             new_user.save()
-            # return redirect(reverse(''))
+            send_email('فعالسازی حساب کاربری', new_user.email, {'user': new_user.username},
+                       'emails/active_accounts.html')
+            return redirect(reverse('success'))
 
     context = {
         'register_page': register_page,
     }
     return render(request, 'RegisterPage/Register.html', context)
+
+
+def confirm_register(request, confirm):
+    user: Users = Users.objects.filter(confirm_code__iexact=confirm).first()
+    if user is not None:
+        if not user.is_active:
+            user.is_active = True,
+            user.confirm_code = get_random_string(48),
+            user.save()
+            return redirect(reverse('success'))
+        else:
+            pass
+
+        raise Http404
 
 
 def Login(request):
@@ -56,8 +74,8 @@ def Login(request):
             else:
                 is_password_correct = user.check_password(user_password)
                 if is_password_correct:
-                    Login(request, Users)
-                    return redirect(reverse('Home-page'))
+                    login(request, user)
+                    return redirect('RegisterForm')
                 else:
                     login_form.add_error('email', 'ایمیل یا کلمه عبور صحیح نمی باشد')
     else:
@@ -67,12 +85,43 @@ def Login(request):
         'login_form': login_form
     }
 
-    return render(request, 'Accounts/login_page.html', context)
+    return render(request, 'LoginPage/Login.html', context)
 
 
 def ForgotPassword(request):
-    return render(request, 'ForgotPassword/ForgetPassword.html')
+    Forget = ForgotPasswordForm(request.POST)
+    if Forget.is_valid():
+        user_email = Forget.cleaned_data.get('email')
+        user: Users = Users.objects.filter(email__iexact=user_email).first()
+        if user is not None:
+            pass
+    context = {
+        'Forget': Forget
+    }
+    return render(request, 'ForgotPassword/ForgetPassword.html', context)
 
 
-def ResetPassword(request):
-    return render(request, 'ResetPassword/ResetPassword.html')
+def ResetPassword(request, active_code):
+    # user: Users = Users.objects.filter(confirm_code__iexact=active_code).first()
+    # if user is None:
+    #     return redirect(reverse('LoginForm'))
+    # else:
+    #     reset_pass = ResetPasswordForm()
+    user: Users = Users.objects.filter(confirm_code__iexact=active_code).first()
+    reset = ResetPasswordForm(request.POST)
+    if reset.is_valid():
+        if user is None:
+            return redirect(reverse('LoginForm'))
+
+        user_new_pass = reset.cleaned_data.get('password')
+        user.set_password(user_new_pass)
+        user.confirm_code = get_random_string(48)
+        user.is_active = True
+        user.save()
+        return redirect(reverse('LoginForm'))
+    context = {
+        # 'reset_pass': reset_pass,
+        'reset': reset,
+        'user': user
+    }
+    return render(request, 'ResetPassword/ResetPassword.html', context)
