@@ -38,6 +38,7 @@ class RegisterForm(forms.Form):
         label='Password',
         min_length=8,
         widget=forms.TextInput(attrs={
+            'type': 'password',
             'placeholder': 'Password',
             'class': 'form__input',
         })
@@ -47,18 +48,19 @@ class RegisterForm(forms.Form):
         label='ConfirmPassword',
         min_length=8,
         widget=forms.TextInput(attrs={
+            'type': 'password',
             'placeholder': 'ConfirmPassword',
             'class': 'form__input',
         })
     )
 
-    # def clean_confirm_password(self):
-    #     password = self.cleaned_data.get('password')
-    #     confirm_password = self.cleaned_data.get('confirm_password')
-    #     if password == confirm_password:
-    #         return confirm_password
-    #
-    #     raise ValidationError('کلمه عبور و تکرار کلمه عبور باهم مغایرت دارد')
+    def clean_confirm_password(self):
+        password = self.cleaned_data.get('password')
+        confirm_password = self.cleaned_data.get('confirm_password')
+        if password == confirm_password:
+            return confirm_password
+
+        raise ValidationError('کلمه عبور و تکرار کلمه عبور باهم مغایرت دارد')
 
 
 class LoginForm(forms.Form):
@@ -75,6 +77,7 @@ class LoginForm(forms.Form):
         label='Password',
         min_length=8,
         widget=forms.TextInput(attrs={
+            'type': 'password',
             'placeholder': 'Password',
             'class': 'form__input',
         })
@@ -85,6 +88,10 @@ class ForgotPasswordForm(forms.Form):
     email = forms.EmailField(
         required=True,
         label='EmailAddress',
+        widget=forms.EmailInput(attrs={
+            'class': 'form__input',
+            'placeholder': 'Email',
+        })
     )
 
 
@@ -93,9 +100,19 @@ class ResetPasswordForm(forms.Form):
         required=True,
         label='NewPassword',
         min_length=8,
+        widget=forms.TextInput(attrs={
+            'type': 'password',
+            'placeholder': 'Password',
+            'class': 'form__input',
+        })
     )
     confirm_password = forms.CharField(
         required=True,
         label='ConfirmPassword',
         min_length=8,
+        widget=forms.TextInput(attrs={
+            'type': 'password',
+            'placeholder': 'ConfirmPassword',
+            'class': 'form__input',
+        })
     )
